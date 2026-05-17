@@ -1,3 +1,5 @@
+import { project, translate_z, rotate_xz, rotate_yz } from '../math/transform.js';
+
 export class Renderer {
     constructor(canvasId, width = 800, height = 800) {
         this.canvas = document.getElementById(canvasId);
@@ -38,5 +40,22 @@ export class Renderer {
             x: (p.x + 1) / 2 * this.width,
             y: (1 - (p.y + 1) / 2) * this.height,
         };
+    }
+
+    drawWireframe(vertices, faces, { angleX = 0, angleY = 0, dz = 1.5 } = {}) {
+        for (const f of faces) {
+            for (let i = 0; i < f.length; ++i) {
+                const a = vertices[f[i]];
+                const b = vertices[f[(i + 1) % f.length]];
+                
+                const rotA = rotate_yz(rotate_xz(a, angleX), angleY);
+                const rotB = rotate_yz(rotate_xz(b, angleX), angleY);
+                
+                const projectedA = this.screen(project(translate_z(rotA, dz)));
+                const projectedB = this.screen(project(translate_z(rotB, dz)));
+                
+                this.line(projectedA, projectedB);
+            }
+        }
     }
 }

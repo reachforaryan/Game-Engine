@@ -1,25 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;  /* horizontal center */
-    align-items: center;      /* vertical center */
-    background: #111;
-}
-
-canvas {
-    border: 1px solid white;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Engine Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <canvas id="game"></canvas>
-</body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Apex <span>Engine</span></h1>
+            <div class="status">
+                <span class="dot pulse"></span>
+                <span>System Online</span>
+            </div>
+        </header>
 
-<script type="module" src="index.js"></script>
+        <main class="bento-grid">
+            <div class="card canvas-card">
+                <div class="card-header">
+                    <h2>Render Preview</h2>
+                    <span class="badge" id="model-badge">Model: Teapot</span>
+                </div>
+                <div class="canvas-container scanlines">
+                    <canvas id="game"></canvas>
+                </div>
+            </div>
+
+            <div class="card metrics-card fps-card">
+                <h3>FPS</h3>
+                <div class="metric-value" id="val-fps">0</div>
+            </div>
+
+            <div class="card metrics-card">
+                <h3>Frame Time</h3>
+                <div class="metric-value"><span id="val-frametime">0</span> <span class="unit">ms</span></div>
+            </div>
+
+            <div class="card metrics-card">
+                <h3>Polygons</h3>
+                <div class="metric-value" id="val-polygons">0</div>
+            </div>
+
+            <div class="card metrics-card">
+                <h3>Vertices</h3>
+                <div class="metric-value" id="val-vertices">0</div>
+            </div>
+
+            <div class="card control-card">
+                <h3>Controls</h3>
+                <div class="control-group">
+                    <label>
+                        <span>Rotation Speed</span>
+                        <span id="val-speed">1.0x</span>
+                    </label>
+                    <input type="range" id="speed-slider" min="0" max="5" step="0.1" value="1">
+                </div>
+                <div class="control-group">
+                    <label>Model</label>
+                    <select id="model-select">
+                        <!-- Options are dynamically populated by JS -->
+                    </select>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
 </html>
